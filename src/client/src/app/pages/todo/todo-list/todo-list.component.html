@@ -1,5 +1,5 @@
-<app-page id="home" [isLoading]="!todos">
-  <table class="table table-striped">
+<section id="app-todo-list">
+  <table class="table table-striped" *ngIf="todos && todos.length; else emptyTodos">
     <thead class="thead-inverse">
       <tr>
         <th>Actions</th>
@@ -36,4 +36,7 @@
       </tr>
     </tbody>
   </table>
-</app-page>
+  <ng-template #emptyTodos>
+    You have no todo registered yet
+  </ng-template>
+</section>

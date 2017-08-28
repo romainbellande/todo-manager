@@ -4,13 +4,14 @@ import * as chalk from 'chalk';
 import { Model, Document } from 'mongoose';
 import { CoreConfig } from '../../../common/config/core.config';
 import { CrudOptions } from '../interfaces';
+import { Endpoint } from '../../../common/interfaces';
 
 type Middleware = (req: restify.Request, res: restify.Response, next: restify.Next) => void;
 
 export class Crud<T extends Document> {
 
   constructor(protected server: restify.Server,
-              private endpoint: string,
+              private endpoint: Endpoint,
               private MyModel: Model<T>,
               private options?: CrudOptions) {}
 
@@ -38,7 +39,7 @@ export class Crud<T extends Document> {
   }
 
   private reqId(req: restify.Request): string {
-    return req.params[this.endpoint + 'Id'];
+    return req.params[this.endpoint.name + 'Id'];
   }
 
   private remove(middleware?: Middleware): void {
@@ -129,8 +130,8 @@ export class Crud<T extends Document> {
   }
 
   private getEndpoint(isSingle?: boolean) {
-    const baseEndpoint = this.options && this.options.plural ? this.options.plural : this.endpoint + 's';
-    const singleEndpoint = isSingle ? `/:${ this.endpoint }Id` : '';
+    const baseEndpoint = this.endpoint.plural ? this.endpoint.plural : this.endpoint.name + 's';
+    const singleEndpoint = isSingle ? `/:${ this.endpoint.name }Id` : '';
     return `/${ baseEndpoint }${ singleEndpoint }`;
   }
 

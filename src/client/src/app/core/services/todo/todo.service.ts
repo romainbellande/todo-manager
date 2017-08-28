@@ -4,13 +4,15 @@ import { Observable } from 'rxjs/Rx';
 
 import { ApiService } from '../api/api.service';
 import { CrudService } from '../crud/crud.service';
-import { Todo } from '../../../../../../common/interfaces';
+import { Todo, todoEndpoint } from '../../../../../../common/interfaces';
 
 @Injectable()
-export class TodoService extends ApiService {
-  _url = '/todos';
+export class TodoService {
+  todos: Array<Todo>;
 
-  constructor(crud: CrudService) {
-    super(crud);
+  constructor(public crud: CrudService<Todo>) {
+    this.crud.setup(todoEndpoint, {
+      enableList: true
+    });
   }
 }
