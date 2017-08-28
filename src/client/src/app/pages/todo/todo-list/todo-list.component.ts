@@ -15,7 +15,12 @@ export class TodoListComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleEditMod(todo: Todo) {
+  public remove(todo: Todo) {
+    this.todoService.crud.remove(todo)
+      .subscribe();
+  }
+
+  public toggleEditMod(todo: Todo) {
     todo.isEditMod = !todo.isEditMod;
   }
 }

@@ -18,7 +18,7 @@
             <button type="button" class="btn" [ngClass]="todo.isEditMod ? 'btn-success' : 'btn-primary'" (click)="toggleEditMod(todo)">
               <span class="oi" [ngClass]="todo.isEditMod ? 'oi-check' : 'oi-pencil'"></span>
             </button>
-            <button type="button" class="btn btn-danger">
+            <button type="button" class="btn btn-danger" (click)="remove(todo)">
               <span class="oi oi-trash"></span>
             </button>
           </div>

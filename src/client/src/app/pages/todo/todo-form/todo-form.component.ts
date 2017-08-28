@@ -28,8 +28,6 @@ export class TodoFormComponent implements OnInit {
   onSubmit() {
     const todo: Todo = this.todoForm.value;
     this.todoService.crud.create(todo)
-      .subscribe(() => {
-        console.log('list', this.todoService.crud.list);
-      });
+      .subscribe();
   }
 }
