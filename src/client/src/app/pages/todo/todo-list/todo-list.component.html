@@ -24,7 +24,7 @@
           </div>
         </th>
         <ng-container *ngIf="!todo.isEditMod; else editTpl">
-          <td>{{ todo._id }}</td>
+          <td><a [routerLink]="[todo._id]">{{ todo._id }}</a></td>
           <td>{{ todo.title }}</td>
           <td>{{ todo.description }}</td>
         </ng-container>

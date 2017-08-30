@@ -22,6 +22,12 @@ connection.once('open', () => {
 
   new Api(server, connection);
 
+  server.get(/\.*/, restify.plugins.serveStatic({
+    directory: '../client',
+    default: 'index.html',
+    gzip: true
+  }));
+
   server.listen(CoreConfig.PORT, function() {
     console.log(chalk.green(`${ CoreConfig.APP_NAME } listening at ${ chalk.cyan(`http://127.0.0.1:${ CoreConfig.PORT }${ CoreConfig.BASE_API }`) }`));
   });

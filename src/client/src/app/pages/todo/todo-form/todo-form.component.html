@@ -18,7 +18,10 @@
     </div>
     <button
       type="submit"
-      [disabled]="todoForm.pristine"
-      class="btn btn-success">Save</button> &nbsp;
+      [disabled]="todoForm.invalid"
+      class="btn btn-success">Save</button>
   </form>
+  <div class="alert" [@fadeIn]="fadeInState">
+    <ngb-alert type="success">Todo successfully created!</ngb-alert>
+  </div>
 </section>
