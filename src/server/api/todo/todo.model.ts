@@ -12,6 +12,8 @@ export class TodoModel implements ApiModel {
     },
     description: String,
     link: String
+  }, {
+    timestamps: true
   });
 
   constructor(private connection: Connection) {}

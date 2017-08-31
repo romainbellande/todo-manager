@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { trigger, state, animate, transition, style } from '@angular/animations';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Todo } from '../../../../../../common/interfaces';
 import { TodoService } from '../../../core/services';
@@ -23,33 +24,40 @@ export class TodoFormComponent implements OnInit {
   isSuccessMsgDisplayed = false;
   fadeInState: 'active' | 'inactive' = 'inactive';
 
-  constructor(private todoService: TodoService, private fb: FormBuilder) { }
+  constructor(private todoService: TodoService,
+              private fb: FormBuilder,
+              private activeModal: NgbActiveModal) { }
 
   ngOnInit() {
     this.createForm();
   }
 
-  createForm() {
-    this.todoForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required]
-    });
-  }
-
-  onSubmit() {
+  public onSubmit() {
     const todo: Todo = this.todoForm.value;
     this.todoService.crud.create(todo)
       .subscribe(() => {
         this.isSuccessMsgDisplayed = true;
         this.toggleFade();
-        setTimeout(() => {
-          this.toggleFade();
-        }, 1500);
+        this.close();
+        // setTimeout(() => {
+        //   this.toggleFade();
+        // }, 1500);
       });
   }
 
   public toggleFade() {
     this.fadeInState = this.fadeInState === 'active' ? 'inactive' : 'active';
+  }
+
+  private close() {
+    this.activeModal.close();
+  }
+
+  private createForm() {
+    this.todoForm = this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required]
+    });
   }
 
   private toggleMsg() {

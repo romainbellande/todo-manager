@@ -1,4 +1,4 @@
-<section id="todo-form" class="col-12 col-md-6">
+<section id="todo-form" class="col-12">
   <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="todo-form-title">Title</label>
@@ -21,7 +21,7 @@
       [disabled]="todoForm.invalid"
       class="btn btn-success">Save</button>
   </form>
-  <div class="alert" [@fadeIn]="fadeInState">
+  <!-- <div class="alert" [@fadeIn]="fadeInState">
     <ngb-alert type="success">Todo successfully created!</ngb-alert>
-  </div>
+  </div> -->
 </section>

@@ -4,7 +4,7 @@ import { Entity } from './entity.interface';
 export interface Todo extends Entity {
   title: string;
   description: string;
-  isEditMod?: boolean;
+  isChecked?: boolean;
 }
 
 export const todoEndpoint: Endpoint = {

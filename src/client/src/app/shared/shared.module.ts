@@ -16,14 +16,20 @@ const modules = [
   NgbModule
 ];
 
+const pipes = [];
+
 @NgModule({
   imports: [
     ...modules
   ],
-  declarations: [...components],
+  declarations: [
+    ...components,
+    ...pipes
+  ],
   exports: [
     ...modules,
-    ...components
+    ...components,
+    ...pipes
   ]
 })
 export class SharedModule { }
