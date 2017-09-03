@@ -4,11 +4,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PageComponent,
-        LoaderComponent } from './components';
+        LoaderComponent,
+        TodoListComponent } from './components';
 
 const components = [
   PageComponent,
-  LoaderComponent
+  LoaderComponent,
+  TodoListComponent
 ];
 
 const modules = [

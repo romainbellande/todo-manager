@@ -1,3 +1,3 @@
 <app-page id="todo" [isLoading]="!todoService.crud.list">
-  <app-todo-list [todos]="todoService.crud.list"></app-todo-list>
+  <app-todo-list [mod]="mod" [todos]="todoService.crud.list"></app-todo-list>
 </app-page>

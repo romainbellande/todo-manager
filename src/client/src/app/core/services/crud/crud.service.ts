@@ -41,12 +41,24 @@ export class CrudService<T extends Entity> {
       });
   }
 
+
   public remove(body: T): Observable<T> {
     return this.http.delete(this.getEndpoint(body))
       .map((res: T) => {
         if (this.list) {
           const index = this.list.findIndex(item => item._id === res._id);
           this.list.splice(index, 1);
+        }
+        return res;
+      });
+  }
+
+  public update(body: T): Observable<T> {
+    return this.http.patch(this.getEndpoint(body), body)
+      .map((res: T) => {
+        if (this.list) {
+          const index = this.list.findIndex(item => item._id === res._id);
+          Object.assign(this.list[index], res);
         }
         return res;
       });

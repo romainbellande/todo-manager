@@ -30,27 +30,33 @@ export class TodoFormComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    if (this.todoService.hasEditTodo()) {
+      const todo = this.todoService.editTodo;
+      this.todoForm.setValue({
+        title: todo.title,
+        description: todo.description
+      });
+    }
   }
 
   public onSubmit() {
     const todo: Todo = this.todoForm.value;
-    this.todoService.crud.create(todo)
-      .subscribe(() => {
-        this.isSuccessMsgDisplayed = true;
-        this.toggleFade();
-        this.close();
-        // setTimeout(() => {
-        //   this.toggleFade();
-        // }, 1500);
-      });
-  }
-
-  public toggleFade() {
-    this.fadeInState = this.fadeInState === 'active' ? 'inactive' : 'active';
+    if (this.todoService.hasEditTodo()) {
+      todo._id = this.todoService.editTodo._id;
+      this.edit(todo);
+      this.todoService.editTodo = null;
+    } else {
+      this.create(todo);
+    }
   }
 
   private close() {
     this.activeModal.close();
+  }
+
+  private create(todo: Todo): void {
+    this.todoService.crud.create(todo)
+    .subscribe(this.close.bind(this));
   }
 
   private createForm() {
@@ -58,6 +64,11 @@ export class TodoFormComponent implements OnInit {
       title: ['', Validators.required],
       description: ['', Validators.required]
     });
+  }
+
+  private edit(todo: Todo): void {
+    this.todoService.crud.update(todo)
+      .subscribe(this.close.bind(this));
   }
 
   private toggleMsg() {

@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { TodoService } from '../../../core/services';
 import { Todo } from '../../../../../../common/interfaces';
+import { TodoFormComponent } from '../../../core/components/todo-form/todo-form.component';
 
 type SortType = -1 | 1 | 0;
 @Component({
@@ -10,10 +13,20 @@ type SortType = -1 | 1 | 0;
 })
 export class TodoListComponent implements OnInit {
   @Input() todos: Array<Todo>;
+  @Input() mod: 'doing' | 'done';
 
-  constructor(private todoService: TodoService) { }
+  constructor(private todoService: TodoService,
+              private modalService: NgbModal) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  public edit(todo: Todo): void {
+    this.todoService.editTodo = todo;
+    this.modalService.open(TodoFormComponent);
+  }
+
+  public filterTodos(todos: Array<Todo>): Array<Todo> {
+    return this.todos.filter(item => this.mod === 'done' ? item.isChecked : !item.isChecked);
   }
 
   public remove(todo: Todo): void {
@@ -23,12 +36,14 @@ export class TodoListComponent implements OnInit {
 
   public sortTodos(todos: Array<Todo>): Array<Todo> {
     return this.todos.sort((a, b) => {
-      return (this.booleanToInt(a.isChecked) - this.booleanToInt(b.isChecked));
+      return (this.compareCheck(a, b) || this.compareCreatedAt(a, b));
     });
   }
 
   public toggleCheck(todo: Todo): void {
     todo.isChecked = !todo.isChecked;
+    this.todoService.crud.update(todo)
+      .subscribe();
   }
 
   private booleanToInt(val: boolean): number {
@@ -43,6 +58,6 @@ export class TodoListComponent implements OnInit {
   private compareCreatedAt(a: Todo, b: Todo): SortType {
     const date1 = new Date(a.createdAt);
     const date2 = new Date(b.createdAt);
-    return date1 > date2 ? -1 : date1 < date2 ? 1 : 0;
+    return date1 > date2 ? 0 : date1 <= date2 ? 1 : 1;
   }
 }

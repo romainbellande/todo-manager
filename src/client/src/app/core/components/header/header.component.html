@@ -1,6 +1,22 @@
 <header>
-  <nav class="navbar navbar-dark bg-dark">
+  <nav class="navbar navbar-dark bg-dark navbar-expand">
     <span class="navbar-brand">Todo Manager</span>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLink="/todos"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">Todo<span class="badge badge-danger">{{ todoService.getNbTodo() }}</span></a>
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLink="/todos/done"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">Done<span class="badge badge-success">{{ todoService.getNbDone() }}</span></a>
+      </li>
+    </ul>
     <div class="form-inline my-2 my-lg-0">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="openTodoForm()">
         <span class="oi oi-plus"></span>

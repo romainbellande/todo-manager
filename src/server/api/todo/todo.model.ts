@@ -11,7 +11,11 @@ export class TodoModel implements ApiModel {
       required: true
     },
     description: String,
-    link: String
+    link: String,
+    isChecked: {
+      type: Boolean,
+      default: false
+    }
   }, {
     timestamps: true
   });

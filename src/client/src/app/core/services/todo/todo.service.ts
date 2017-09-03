@@ -9,10 +9,23 @@ import { Todo, todoEndpoint } from '../../../../../../common/interfaces';
 @Injectable()
 export class TodoService {
   todos: Array<Todo>;
+  editTodo: Todo;
 
   constructor(public crud: CrudService<Todo>) {
     this.crud.setup(todoEndpoint, {
       enableList: true
     });
+  }
+
+  public hasEditTodo(): boolean {
+    return !!this.editTodo;
+  }
+
+  public getNbTodo(): number {
+    return this.crud.list.filter(a => !a.isChecked).length;
+  }
+
+  public getNbDone(): number {
+    return this.crud.list.length - this.getNbTodo();
   }
 }

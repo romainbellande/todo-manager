@@ -5,7 +5,20 @@ import { TodoComponent } from './todo.component';
 import { TodoDetailComponent } from './todo-detail/todo-detail.component';
 
 const routes: Routes = [
-  { path: '', component: TodoComponent },
+  {
+    path: '',
+    component: TodoComponent,
+    data: {
+      mod: 'doing'
+    }
+  },
+  {
+    path: 'done',
+    component: TodoComponent,
+    data: {
+      mod: 'done'
+    }
+  },
   { path: ':todoId', component: TodoDetailComponent }
 ];
 
