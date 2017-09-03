@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { TodoService } from '../../../core/services';
-import { Todo } from '../../../../../../common/interfaces';
+import { TodoService, CategoryService } from '../../../core/services';
+import { Todo, Category } from '../../../../../../common/interfaces';
 import { TodoFormComponent } from '../../../core/components/todo-form/todo-form.component';
 
 type SortType = -1 | 1 | 0;
@@ -16,6 +16,7 @@ export class TodoListComponent implements OnInit {
   @Input() mod: 'doing' | 'done';
 
   constructor(private todoService: TodoService,
+              private categoryService: CategoryService,
               private modalService: NgbModal) { }
 
   ngOnInit() {}
@@ -27,6 +28,11 @@ export class TodoListComponent implements OnInit {
 
   public filterTodos(todos: Array<Todo>): Array<Todo> {
     return this.todos.filter(item => this.mod === 'done' ? item.isChecked : !item.isChecked);
+  }
+
+  public getCategoryName(todo: Todo): string {
+    const category = this.categoryService.crud.list.find(a => a._id === todo.category);
+    return category ? category.name : '';
   }
 
   public remove(todo: Todo): void {

@@ -5,6 +5,7 @@
         <th class="th-actions">Actions</th>
         <th>Title</th>
         <th>Description</th>
+        <th>Category</th>
       </tr>
     </thead>
     <tbody>
@@ -22,14 +23,9 @@
             </button>
           </div>
         </td>
-        <ng-container *ngIf="!todo.isEditMod; else editTpl">
-          <td class="align-middle">{{ todo.title }}</td>
-          <td class="align-middle">{{ todo.description }}</td>
-        </ng-container>
-        <ng-template #editTpl>
-          <td><input type="text" [value]="todo.title"></td>
-          <td><input type="text" [value]="todo.description"></td>
-        </ng-template>
+        <td class="align-middle">{{ todo.title }}</td>
+        <td class="align-middle">{{ todo.description }}</td>
+        <td class="align-middle">{{ getCategoryName(todo) }}</td>
       </tr>
     </tbody>
   </table>

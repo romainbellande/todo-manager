@@ -2,8 +2,8 @@ import { model, Model, Schema, Document, Connection } from 'mongoose';
 import { Todo } from '../../../common/interfaces';
 import { ApiModel } from "../../common/interfaces/api-model.interface";
 
+import { categorySchema } from '../category/category.model';
 export interface TodoDoc extends Todo, Document {}
-
 export class TodoModel implements ApiModel {
   schema: Schema = new Schema({
     title: {
@@ -15,6 +15,10 @@ export class TodoModel implements ApiModel {
     isChecked: {
       type: Boolean,
       default: false
+    },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category'
     }
   }, {
     timestamps: true

@@ -10,8 +10,10 @@ import { Todo, todoEndpoint } from '../../../../../../common/interfaces';
 export class TodoService {
   todos: Array<Todo>;
   editTodo: Todo;
+  crud: CrudService<Todo>;
 
-  constructor(public crud: CrudService<Todo>) {
+  constructor(http: HttpClient) {
+    this.crud = new CrudService<Todo>(http);
     this.crud.setup(todoEndpoint, {
       enableList: true
     });

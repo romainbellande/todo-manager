@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TodoService } from './core/services';
+import { TodoService,
+         CategoryService } from './core/services';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,13 @@ import { TodoService } from './core/services';
 })
 export class AppComponent implements OnInit {
   title = 'app';
-  constructor(private todoService: TodoService) {}
+  constructor(private todoService: TodoService,
+              private categoryService: CategoryService) {}
 
   ngOnInit() {
     this.todoService.crud.find()
-    .subscribe();
+      .subscribe();
+    this.categoryService.crud.find()
+      .subscribe();
   }
 }

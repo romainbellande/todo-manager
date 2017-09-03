@@ -5,7 +5,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 
 import { CrudService,
-         TodoService } from './services';
+         TodoService,
+         CategoryService } from './services';
+
+import { TodoGuard } from './guards';
 
 import { HeaderComponent,
         TodoFormComponent } from './components';
@@ -17,8 +20,11 @@ const components = [
 
 const services = [
   CrudService,
-  TodoService
+  TodoService,
+  CategoryService
 ];
+
+const guards = [ TodoGuard ];
 
 @NgModule({
   imports: [
@@ -31,7 +37,8 @@ const services = [
     ...components
   ],
   providers: [
-    ...services
+    ...services,
+    ...guards
   ],
   exports: [
     ...components

@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { trigger, state, animate, transition, style } from '@angular/animations';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Todo } from '../../../../../../common/interfaces';
-import { TodoService } from '../../../core/services';
+import { Todo, Category } from '../../../../../../common/interfaces';
+import { TodoService, CategoryService } from '../../../core/services';
 
 @Component({
   selector: 'app-todo-form',
@@ -25,21 +25,27 @@ export class TodoFormComponent implements OnInit {
   fadeInState: 'active' | 'inactive' = 'inactive';
 
   constructor(private todoService: TodoService,
+              public categoryService: CategoryService,
               private fb: FormBuilder,
               private activeModal: NgbActiveModal) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.createForm();
     if (this.todoService.hasEditTodo()) {
       const todo = this.todoService.editTodo;
       this.todoForm.setValue({
         title: todo.title,
-        description: todo.description
+        description: todo.description,
+        category: todo.category || ''
       });
     }
   }
 
-  public onSubmit() {
+  public getCategories(): Array<Category> {
+    return this.categoryService.crud.list;
+  }
+
+  public onSubmit(): void {
     const todo: Todo = this.todoForm.value;
     if (this.todoService.hasEditTodo()) {
       todo._id = this.todoService.editTodo._id;
@@ -62,7 +68,8 @@ export class TodoFormComponent implements OnInit {
   private createForm() {
     this.todoForm = this.fb.group({
       title: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      category: ['', Validators.required]
     });
   }
 

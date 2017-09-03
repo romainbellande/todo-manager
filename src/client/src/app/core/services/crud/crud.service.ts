@@ -41,6 +41,10 @@ export class CrudService<T extends Entity> {
       });
   }
 
+  public isEmpty(): boolean {
+    return !!(this.list && this.list.length);
+  }
+
 
   public remove(body: T): Observable<T> {
     return this.http.delete(this.getEndpoint(body))
